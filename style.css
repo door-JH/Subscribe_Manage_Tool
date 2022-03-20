@@ -1,0 +1,29 @@
+body {
+  margin: 0px;
+}
+
+header {
+  height: 50px;
+  background-color: aqua;
+}
+
+section {
+  background-color: blanchedalmond;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  height: 50px;
+  width: 100px;
+}
+
+.elements {
+  margin: 10px;
+  background-color: darkgrey;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
