@@ -5,27 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <title>My Subscribe Manager</title>
+    <title>구독서비스 관리 도구</title>
   </head>
   <body>
     <header>
-      <button type="button" id="login_button">로그인</button>
-      <div class="datetime">
-        <span id="day_time">22년 00월 00일</span>
-        <span id="clock_time">00시 00분 00초</span>
+      <div class="modal">
+        <div class="modal_body">
+          <form action=""></form>
+        </div>
       </div>
+      <button id="login_button">로그인</button>
     </header>
     <section>
       <div class="elements">
         <span>Netflix</span>
         <progress value="70" max="100"></progress>
-        <div class="elements_options">
+
+        <form class="element_options" action="">
           <input type="button" value="# 수정" />
           <input type="button" value="- 삭제" />
-        </div>
+        </form>
       </div>
 
-      <a href="#" id="add_btn" class="elements"> + </a>
+      <form action="">
+        <input id="add_btn" class="elements" type="button" value="+" />
+      </form>
     </section>
   </body>
+
+  <script>
+    const body = document.querySelector("body");
+    const modal = document.querySelector(".modal");
+    const btnOpenPopup = document.querySelector("#login_button");
+
+    btnOpenPopup.addEventListener("click", () => {
+      modal.classList.toggle("show");
+
+      if (modal.classList.contains("show")) {
+        body.style.overflow = "hidden";
+      }
+    });
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.classList.toggle("show");
+
+        if (!modal.classList.contains("show")) {
+          body.style.overflow = "auto";
+        }
+      }
+    });
+  </script>
 </html>
