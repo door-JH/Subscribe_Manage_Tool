@@ -202,11 +202,28 @@ section {
 
   padding: 40px;
 
-  text-align: center;
-
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 
   transform: translateX(-50%) translateY(-50%);
+}
+
+.modal_body strong {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+#key_id {
+  display: block;
+  line-height: 20px;
+  margin-top: 15px;
+  width: 98%;
+}
+
+#key_btn {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  margin: 0 40px 40px 0;
 }
