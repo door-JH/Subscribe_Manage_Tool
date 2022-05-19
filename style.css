@@ -175,7 +175,8 @@ section {
   min-width: 102px;
 }
 
-.modal {
+.modal_login_cover,
+.modal_add_cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -188,11 +189,13 @@ section {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal.show {
+.modal_login_cover.show,
+.modal_add_cover.show {
   display: block;
 }
 
-.modal_body {
+.modal_login,
+.modal_add {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -209,7 +212,8 @@ section {
   transform: translateX(-50%) translateY(-50%);
 }
 
-.modal_body strong {
+.modal_login strong,
+.modal_add span {
   font-weight: 700;
   font-size: 17px;
 }
@@ -221,9 +225,22 @@ section {
   width: 98%;
 }
 
-#key_btn {
+#key_btn,
+#add_service_btn {
   position: absolute;
   bottom: 0%;
   right: 0%;
   margin: 0 40px 40px 0;
+}
+
+.modal_add div {
+  margin-top: 10px;
+}
+
+#service_name {
+  margin-left: 34px;
+}
+
+#for_long_month {
+  width: 40px;
 }

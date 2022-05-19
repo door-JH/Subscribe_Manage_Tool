@@ -5,16 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link
+      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <link rel="stylesheet" href="/resources/demos/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>구독서비스 관리 도구</title>
   </head>
   <body>
     <header>
-      <div class="modal">
-        <div class="modal_body">
+      <div class="modal_login_cover">
+        <div class="modal_login">
           <form action="">
             <strong>Key</strong>
-            <input type="text" name="key" id="key_id" />
+            <input type="password" name="key" id="key_id" />
             <input type="button" value="Send" id="key_btn" />
+          </form>
+        </div>
+      </div>
+      <div class="modal_add_cover">
+        <div class="modal_add">
+          <form action="">
+            <div>
+              <span>서비스 이름</span>
+              <input id="service_name" type="text" />
+            </div>
+            <div>
+              <span>서비스 시작 날짜</span>
+              <input id="start_date" type="text" />
+              <input id="for_long_month" type="text" placeholder="month" />
+              <input class="decide_btn" type="button" value="Check" />
+            </div>
+            <div>
+              <span>서비스 종료 날짜</span>
+              <input name="" id="" type="text" />
+            </div>
+            <input name="" id="add_service_btn" type="button" value="Add" />
           </form>
         </div>
       </div>
@@ -38,23 +69,47 @@
   </body>
 
   <script>
+    $(function () {
+      $("#start_date").datepicker();
+    });
     const body = document.querySelector("body");
-    const modal = document.querySelector(".modal");
-    const btnOpenPopup = document.querySelector("#login_button");
+    const modal_login = document.querySelector(".modal_login_cover");
+    const btnOpenLogin = document.querySelector("#login_button");
 
-    btnOpenPopup.addEventListener("click", () => {
-      modal.classList.toggle("show");
+    btnOpenLogin.addEventListener("click", () => {
+      modal_login.classList.toggle("show");
 
-      if (modal.classList.contains("show")) {
-        body.style.overflow = "hidden";
+      if (modal_login.classList.contains("show")) {
+        modal_login.style.overflow = "hidden";
       }
     });
 
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        modal.classList.toggle("show");
+    modal_login.addEventListener("click", (event) => {
+      if (event.target === modal_login) {
+        modal_login.classList.toggle("show");
 
-        if (!modal.classList.contains("show")) {
+        if (!modal_login.classList.contains("show")) {
+          body.style.overflow = "auto";
+        }
+      }
+    });
+
+    const modal_add = document.querySelector(".modal_add_cover");
+    const btnaddPopup = document.querySelector("#add_btn");
+
+    btnaddPopup.addEventListener("click", () => {
+      modal_add.classList.toggle("show");
+
+      if (modal_add.classList.contains("show")) {
+        modal_add.style.overflow = "hidden";
+      }
+    });
+
+    modal_add.addEventListener("click", (event) => {
+      if (event.target === modal_add) {
+        modal_add.classList.toggle("show");
+
+        if (!modal_add.classList.contains("show")) {
           body.style.overflow = "auto";
         }
       }
