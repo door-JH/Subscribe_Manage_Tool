@@ -200,7 +200,7 @@ section {
   top: 50%;
   left: 50%;
 
-  width: 400px;
+  width: 350px;
   height: 100px;
 
   padding: 40px;
@@ -242,5 +242,9 @@ section {
 }
 
 #for_long_month {
-  width: 40px;
+  width: 36px;
+}
+
+.decide_btn {
+  width: 34px;
 }
