@@ -15,6 +15,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
     <title>구독서비스 관리 도구</title>
   </head>
   <body>
@@ -33,19 +35,24 @@
           <form action="">
             <div>
               <span>서비스 이름</span>
-              <input id="service_name" type="text" />
+              <input id="service_name" class = "input_text" type="text" />
             </div>
             <div>
               <span>서비스 시작 날짜</span>
-              <input id="start_date" type="text" />
-              <input id="for_long_month" type="text" placeholder="month" />
-              <input class="decide_btn" type="button" value="Cal" />
+              <input id="start_date" class = "input_text" type="text" />
+              <input id="for_long_month" class = "input_text" type="text" placeholder="month" />
+              
             </div>
             <div>
               <span>서비스 종료 날짜</span>
-              <input name="" id="" type="text" />
+              <input name="" id="" class = "input_text" type="text" />
             </div>
-            <input name="" id="add_service_btn" type="button" value="Add" />
+
+            <div class="optional_btns">
+              <input name="" id="add_service_btn" type="button" value="Add" />
+              <input class="decide_btn" type="button" value="Cal" />
+            </div>
+            
           </form>
         </div>
       </div>
@@ -68,7 +75,48 @@
     </section>
   </body>
 
-  <script>
+  <script> 
+
+    //DOM
+    var subs_elements = [{
+      name: "netflix",
+      start_date : "05/22/2022",
+      end_date : "06/22/2022"
+    }, {
+      name: "coupang",
+      start_date : "07/22/2022",
+      end_date : "08/22/2022"
+    }, {
+      name: "smile_club",
+      start_date : "06/22/2022",
+      end_date : "07/22/2022"
+    }];
+    
+    var addBtn_Html = '<form action="">' +
+        '<input id="add_btn" class="elements" type="button" value="+" />' +
+      '</form>'
+
+    var comp_Section_Html = "";
+    
+    for(var i = 0; i < subs_elements.length; i++){
+      var subs_temp = subs_elements[i];
+
+      comp_Section_Html = comp_Section_Html + '<div class="elements">' +
+        '<span>'+ subs_temp.name + '</span>' +
+        '<progress value="70" max="100"></progress>' +
+        '<form class="element_options" action="">' +
+          '<input type="button" value="# 수정" />' +
+          '<input type="button" value="- 삭제" />' +
+        '</form>' +
+      '</div>' 
+    }
+
+    document.querySelector('section').innerHTML = comp_Section_Html + addBtn_Html;
+
+
+
+
+    // activity_modal
     $(function () {
       $("#start_date").datepicker();
     });

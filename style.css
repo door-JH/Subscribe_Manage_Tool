@@ -152,7 +152,8 @@ section {
   cursor: pointer;
 }
 
-.elements {
+.elements
+{
   margin: 10px 5px 0 5px;
   background-color: darkgrey;
   height: 35px;
@@ -161,18 +162,24 @@ section {
   justify-content: center;
 }
 
+/* #add_btn {
+  min-width: 453px;
+  width:99%;
+} */
 #add_btn {
   padding: 0;
-  width: 98.5%;
+  width: 99%;
+  margin: 10px 5px 0 5px;
+ 
 }
 
 .elements > progress {
   width: 75%;
-  margin: 0 20px 0 10px;
+  margin: 0 10px 0 10px;
 }
 
 .element_options {
-  min-width: 102px;
+  min-width: 111px;
 }
 
 .modal_login_cover,
@@ -218,6 +225,10 @@ section {
   font-size: 17px;
 }
 
+.input_text {
+  width: 150px;
+}
+
 #key_id {
   display: block;
   line-height: 20px;
@@ -225,8 +236,7 @@ section {
   width: 98%;
 }
 
-#key_btn,
-#add_service_btn {
+#key_btn{
   position: absolute;
   bottom: 0%;
   right: 0%;
@@ -238,13 +248,20 @@ section {
 }
 
 #service_name {
-  margin-left: 34px;
+  margin-left: 40px;
 }
 
 #for_long_month {
-  width: 36px;
+  width: 38px;
 }
 
-.decide_btn {
-  width: 34px;
+.decide_btn,
+#add_service_btn {
+  width: 40px;
+  float:right;
+  margin-left: 5px;
+}
+
+.optional_btns {
+  margin-top: 10px;
 }
