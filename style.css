@@ -152,8 +152,7 @@ section {
   cursor: pointer;
 }
 
-.elements
-{
+.elements {
   margin: 10px 5px 0 5px;
   background-color: darkgrey;
   height: 35px;
@@ -170,7 +169,6 @@ section {
   padding: 0;
   width: 99%;
   margin: 10px 5px 0 5px;
- 
 }
 
 .elements > progress {
@@ -236,7 +234,7 @@ section {
   width: 98%;
 }
 
-#key_btn{
+#key_btn {
   position: absolute;
   bottom: 0%;
   right: 0%;
@@ -248,7 +246,7 @@ section {
 }
 
 #service_name {
-  margin-left: 40px;
+  margin-left: 34px;
 }
 
 #for_long_month {
@@ -258,7 +256,7 @@ section {
 .decide_btn,
 #add_service_btn {
   width: 40px;
-  float:right;
+  float: right;
   margin-left: 5px;
 }
 

@@ -1,166 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <link
-      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css"
-      rel="stylesheet"
-      type="text/css"
-    />
 
-    <link rel="stylesheet" href="/resources/demos/style.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" type="text/css" />
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-    <title>구독서비스 관리 도구</title>
-  </head>
-  <body>
-    <header>
-      <div class="modal_login_cover">
-        <div class="modal_login">
-          <form action="">
-            <strong>Key</strong>
-            <input type="password" name="key" id="key_id" />
-            <input type="button" value="Send" id="key_btn" />
-          </form>
-        </div>
-      </div>
-      <div class="modal_add_cover">
-        <div class="modal_add">
-          <form action="">
-            <div>
-              <span>서비스 이름</span>
-              <input id="service_name" class = "input_text" type="text" />
-            </div>
-            <div>
-              <span>서비스 시작 날짜</span>
-              <input id="start_date" class = "input_text" type="text" />
-              <input id="for_long_month" class = "input_text" type="text" placeholder="month" />
-              
-            </div>
-            <div>
-              <span>서비스 종료 날짜</span>
-              <input name="" id="" class = "input_text" type="text" />
-            </div>
+  <title>구독서비스 관리 도구</title>
+</head>
 
-            <div class="optional_btns">
-              <input name="" id="add_service_btn" type="button" value="Add" />
-              <input class="decide_btn" type="button" value="Cal" />
-            </div>
-            
-          </form>
-        </div>
-      </div>
-      <button id="login_button">로그인</button>
-    </header>
-    <section>
-      <div class="elements">
-        <span>Netflix</span>
-        <progress value="70" max="100"></progress>
-
-        <form class="element_options" action="">
-          <input type="button" value="# 수정" />
-          <input type="button" value="- 삭제" />
+<body>
+  <header>
+    <div class="modal_login_cover">
+      <div class="modal_login">
+        <form action="">
+          <strong>Key</strong>
+          <input type="password" name="key" id="key_id" />
+          <input type="button" value="Send" id="key_btn" />
         </form>
       </div>
+    </div>
+    <div class="modal_add_cover">
+      <div class="modal_add">
+        <form action="">
+          <div>
+            <span>서비스 이름</span>
+            <input id="service_name" class="input_text" type="text" />
+          </div>
+          <div>
+            <span>서비스 시작 날짜</span>
+            <input id="start_date" class="input_text" type="text" />
+            <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
-      <form action="">
-        <input id="add_btn" class="elements" type="button" value="+" />
+          </div>
+          <div>
+            <span>서비스 종료 날짜</span>
+            <input name="" id="" class="input_text" type="text" />
+          </div>
+
+          <div class="optional_btns">
+            <input name="" id="add_service_btn" type="button" value="Add" />
+            <input class="decide_btn" type="button" value="Cal" />
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+
+
+
+    <button id="login_button">로그인</button>
+  </header>
+  <section>
+    <div class="elements">
+      <span>Netflix</span>
+      <progress value="70" max="100"></progress>
+
+      <form class="element_options" action="">
+        <input type="button" value="# 수정" />
+        <input type="button" value="- 삭제" />
       </form>
-    </section>
-  </body>
+    </div>
 
-  <script> 
+    <form action="">
+      <input id="add_btn" class="elements" type="button" value="+" />
+    </form>
+  </section>
+</body>
 
-    //DOM
-    var subs_elements = [{
-      name: "netflix",
-      start_date : "05/22/2022",
-      end_date : "06/22/2022"
-    }, {
-      name: "coupang",
-      start_date : "07/22/2022",
-      end_date : "08/22/2022"
-    }, {
-      name: "smile_club",
-      start_date : "06/22/2022",
-      end_date : "07/22/2022"
-    }];
-    
-    var addBtn_Html = '<form action="">' +
-        '<input id="add_btn" class="elements" type="button" value="+" />' +
-      '</form>'
+<script>
 
-    var comp_Section_Html = "";
-    
-    for(var i = 0; i < subs_elements.length; i++){
-      var subs_temp = subs_elements[i];
+  //DOM
+  var subs_elements = [{
+    name: "netflix",
+    start_date: "05/22/2022",
+    end_date: "06/22/2022"
+  }, {
+    name: "coupang",
+    start_date: "07/22/2022",
+    end_date: "08/22/2022"
+  }, {
+    name: "smile_club",
+    start_date: "06/22/2022",
+    end_date: "07/22/2022"
+  }];
 
-      comp_Section_Html = comp_Section_Html + '<div class="elements">' +
-        '<span>'+ subs_temp.name + '</span>' +
-        '<progress value="70" max="100"></progress>' +
-        '<form class="element_options" action="">' +
-          '<input type="button" value="# 수정" />' +
-          '<input type="button" value="- 삭제" />' +
-        '</form>' +
-      '</div>' 
+  var addBtn_Html = '<form action="">' +
+    '<input id="add_btn" class="elements" type="button" value="+" />' +
+    '</form>'
+
+  var comp_Section_Html = "";
+
+  for (var i = 0; i < subs_elements.length; i++) {
+    var subs_temp = subs_elements[i];
+
+    comp_Section_Html = comp_Section_Html + '<div class="elements">' +
+      '<span>' + subs_temp.name + '</span>' +
+      '<progress value="70" max="100"></progress>' +
+      '<form class="element_options" action="">' +
+      '<input type="button" value="# 수정" />' +
+      '<input type="button" value="- 삭제" />' +
+      '</form>' +
+      '</div>'
+  }
+
+  document.querySelector('section').innerHTML = comp_Section_Html + addBtn_Html;
+
+
+
+
+  // activity_modal
+  $(function () {
+    $("#start_date").datepicker();
+  });
+  const body = document.querySelector("body");
+  const modal_login = document.querySelector(".modal_login_cover");
+  const btnOpenLogin = document.querySelector("#login_button");
+
+  btnOpenLogin.addEventListener("click", () => {
+    modal_login.classList.toggle("show");
+
+    if (modal_login.classList.contains("show")) {
+      modal_login.style.overflow = "hidden";
     }
+  });
 
-    document.querySelector('section').innerHTML = comp_Section_Html + addBtn_Html;
-
-
-
-
-    // activity_modal
-    $(function () {
-      $("#start_date").datepicker();
-    });
-    const body = document.querySelector("body");
-    const modal_login = document.querySelector(".modal_login_cover");
-    const btnOpenLogin = document.querySelector("#login_button");
-
-    btnOpenLogin.addEventListener("click", () => {
+  modal_login.addEventListener("click", (event) => {
+    if (event.target === modal_login) {
       modal_login.classList.toggle("show");
 
-      if (modal_login.classList.contains("show")) {
-        modal_login.style.overflow = "hidden";
+      if (!modal_login.classList.contains("show")) {
+        body.style.overflow = "auto";
       }
-    });
+    }
+  });
 
-    modal_login.addEventListener("click", (event) => {
-      if (event.target === modal_login) {
-        modal_login.classList.toggle("show");
+  const modal_add = document.querySelector(".modal_add_cover");
+  const btnaddPopup = document.querySelector("#add_btn");
 
-        if (!modal_login.classList.contains("show")) {
-          body.style.overflow = "auto";
-        }
-      }
-    });
+  btnaddPopup.addEventListener("click", () => {
+    modal_add.classList.toggle("show");
 
-    const modal_add = document.querySelector(".modal_add_cover");
-    const btnaddPopup = document.querySelector("#add_btn");
+    if (modal_add.classList.contains("show")) {
+      modal_add.style.overflow = "hidden";
+    }
+  });
 
-    btnaddPopup.addEventListener("click", () => {
+  modal_add.addEventListener("click", (event) => {
+    if (event.target === modal_add) {
       modal_add.classList.toggle("show");
 
-      if (modal_add.classList.contains("show")) {
-        modal_add.style.overflow = "hidden";
+      if (!modal_add.classList.contains("show")) {
+        body.style.overflow = "auto";
       }
-    });
+    }
+  });
+</script>
 
-    modal_add.addEventListener("click", (event) => {
-      if (event.target === modal_add) {
-        modal_add.classList.toggle("show");
-
-        if (!modal_add.classList.contains("show")) {
-          body.style.overflow = "auto";
-        }
-      }
-    });
-  </script>
 </html>
