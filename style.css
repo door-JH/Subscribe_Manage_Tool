@@ -181,7 +181,8 @@ section {
 }
 
 .modal_login_cover,
-.modal_add_cover {
+.modal_add_cover,
+.modal_update_cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -195,12 +196,14 @@ section {
 }
 
 .modal_login_cover.show,
-.modal_add_cover.show {
+.modal_add_cover.show,
+.modal_update_cover.show {
   display: block;
 }
 
 .modal_login,
-.modal_add {
+.modal_add,
+.modal_update {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -255,7 +258,7 @@ section {
 
 .decide_btn,
 #add_service_btn {
-  width: 40px;
+  width: 58px;
   float: right;
   margin-left: 5px;
 }

@@ -20,6 +20,7 @@
 
 <body>
   <header>
+    <!-- login modal-->
     <div class="modal_login_cover">
       <div class="modal_login">
         <form action="">
@@ -29,6 +30,7 @@
         </form>
       </div>
     </div>
+    <!-- add modal-->
     <div class="modal_add_cover">
       <div class="modal_add">
         <form action="">
@@ -55,26 +57,40 @@
         </form>
       </div>
     </div>
+    <!-- update modal-->
+    <div class="modal_update_cover">
+      <div class="modal_update">
+        <form action="">
+          <div>
+            <span>서비스 이름</span>
+            <input id="service_name" class="input_text" type="text" />
+          </div>
+          <div>
+            <span>서비스 시작 날짜</span>
+            <input id="start_date" class="input_text" type="text" />
+            <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
+          </div>
+          <div>
+            <span>서비스 종료 날짜</span>
+            <input name="" id="" class="input_text" type="text" />
+          </div>
+
+          <div class="optional_btns">
+            <input name="" id="add_service_btn" type="button" value="Update" />
+            <input class="decide_btn" type="button" value="Cal" />
+          </div>
+
+        </form>
+      </div>
+    </div>
 
 
 
     <button id="login_button">로그인</button>
   </header>
   <section>
-    <div class="elements">
-      <span>Netflix</span>
-      <progress value="70" max="100"></progress>
-
-      <form class="element_options" action="">
-        <input type="button" value="# 수정" />
-        <input type="button" value="- 삭제" />
-      </form>
-    </div>
-
-    <form action="">
-      <input id="add_btn" class="elements" type="button" value="+" />
-    </form>
+    <!-- elements section-->
   </section>
 </body>
 
@@ -108,7 +124,7 @@
       '<span>' + subs_temp.name + '</span>' +
       '<progress value="70" max="100"></progress>' +
       '<form class="element_options" action="">' +
-      '<input type="button" value="# 수정" />' +
+      '<input class = "edit_elements" type="button" value="# 수정" />' +
       '<input type="button" value="- 삭제" />' +
       '</form>' +
       '</div>'
@@ -125,7 +141,42 @@
   });
   const body = document.querySelector("body");
   const modal_login = document.querySelector(".modal_login_cover");
+  const modal_add = document.querySelector(".modal_add_cover");
+  const modal_update = document.querySelector(".modal_update_cover")
+  const btnaddPopup = document.querySelector("#add_btn");
   const btnOpenLogin = document.querySelector("#login_button");
+  const btnUpdatePopup = document.querySelector(".edit_elements");
+
+
+  const btnAddService = document.querySelector("#add_service_btn");
+  const btnSendKey = document.querySelector("#key_btn");
+
+  btnSendKey.addEventListener("click", () => {
+    modal_login.classList.remove("show");
+  });
+
+  btnAddService.addEventListener("click", () => {
+    modal_add.classList.remove("show");
+  });
+
+  btnUpdatePopup.addEventListener("click", () => {
+    modal_update.classList.toggle("show");
+
+    if (modal_update.classList.contains("show")) {
+      modal_update.style.overflow = "hidden";
+    }
+  });
+
+  modal_update.addEventListener("click", (event) => {
+    if (event.target === modal_update) {
+      modal_update.classList.toggle("show");
+
+      if (!modal_update.classList.contains("show")) {
+        body.style.overflow = "auto";
+      }
+    }
+  });
+
 
   btnOpenLogin.addEventListener("click", () => {
     modal_login.classList.toggle("show");
@@ -145,8 +196,7 @@
     }
   });
 
-  const modal_add = document.querySelector(".modal_add_cover");
-  const btnaddPopup = document.querySelector("#add_btn");
+
 
   btnaddPopup.addEventListener("click", () => {
     modal_add.classList.toggle("show");
@@ -165,6 +215,8 @@
       }
     }
   });
+
+
 </script>
 
 </html>
