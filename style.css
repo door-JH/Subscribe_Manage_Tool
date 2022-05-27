@@ -142,7 +142,10 @@ section {
   flex-direction: column;
 }
 
-#login_button {
+#login_button,
+#edit_button,
+#delete_button,
+#add_button {
   display: inline-block;
   height: 40px;
   width: 80px;
@@ -265,4 +268,17 @@ section {
 
 .optional_btns {
   margin-top: 10px;
+}
+
+.element {
+  display: flex;
+  /* align-content: center; */
+  justify-content: space-around;
+  border: 1px solid gray;
+  padding: 3px;
+  margin: 5px;
+}
+
+.menu_buttons {
+  display: inline-block;
 }
