@@ -230,7 +230,8 @@ section {
   width: 38px;
 }
 
-#inside_cal_btn,
+#inside_addcal_btn,
+#inside_updatecal_btn,
 #inside_add_btn,
 #inside_update_btn {
   width: 58px;

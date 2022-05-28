@@ -6,10 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" type="text/css" />
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
-    type="text/css" />
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
-  <link rel="stylesheet" href="/resources/demos/style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,7 +26,7 @@
       <div class="modal_login">
         <form action="">
           <span class="name">Key</span>
-          <input type="password" name="key" id="key_id" />
+          <input type="text" class ="input_text" id="key_id" />
           <input type="button" value="Login" id="inside_login_btn" />
         </form>
       </div>
@@ -46,18 +44,18 @@
           </div>
           <div class="content_line">
             <span class ="name">서비스 시작 날짜</span>
-            <input id="start_date" class="input_text" type="text" />
+            <input id="add_start_date" class="input_text" type="text" />
             <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
           </div>
           <div class="content_line">
             <span class ="name">서비스 종료 날짜</span>
-            <input id="end_date" class="input_text" type="text" />
+            <input disabled id="end_date" class="input_text" type="text" />
           </div>
 
           <div class="optional_menu">
             <input name="" id="inside_add_btn" type="button" value="Add" />
-            <input id="inside_cal_btn" type="button" value="Cal" />
+            <input id="inside_addcal_btn" type="button" value="Cal" />
           </div>
           
         </form>
@@ -75,7 +73,7 @@
           </div>
           <div class="content_line">
             <span class ="name">서비스 시작 날짜</span>
-            <input id="start_date" class="input_text" type="text" />
+            <input id="update_start_date" class="input_text" type="text" />
             <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
           </div>
@@ -86,7 +84,7 @@
 
           <div class="optional_menu">
             <input name="" id="inside_update_btn" type="button" value="Update" />
-            <input id="inside_cal_btn" type="button" value="Cal" />
+            <input id="inside_updatecal_btn" type="button" value="Cal" />
           </div>
           <span class="success">테스트용 문구입니다.</span>
         </form>
@@ -131,21 +129,24 @@
 
   //DOM
   var subscribes = [{
+    id: "elogio",
     name: "netflix",
     start_date: "05/22/2022",
     end_date: "06/22/2022"
   }, {
+    id: "elogio",
     name: "coupang",
     start_date: "07/22/2022",
     end_date: "08/22/2022"
   }, {
+    id: "elogio",
     name: "smile_club",
     start_date: "06/22/2022",
     end_date: "07/22/2022"
   }];
 
   var all_html = "";
-
+  
   for (var i = 0; i < subscribes.length; i++) {
     var sub_temp = subscribes[i];
     all_html = all_html + 
@@ -158,13 +159,10 @@
 
   document.querySelector('.elements_cover').innerHTML = all_html;
 
-
-
+  
 
   // activity_modal
-  $(function () {
-    $("#start_date").datepicker();
-  });
+  
 
   const body = document.querySelector("body");
   const modal_login = document.querySelector(".modal_login_cover");  
@@ -182,6 +180,46 @@
   const inside_update_btn = document.querySelector("#inside_update_btn");
   const inside_del_btn = document.querySelector("#inside_del_btn");
 
+  const inside_addcal_btn = document.querySelector("#inside_addcal_btn");
+  const inside_updatecal_btn = document.querySelector("#inside_updatecal_btn");
+
+  //define input_texts
+  var input_texts = document.getElementsByClassName("input_text");
+
+  var key_id = input_texts[0].value;
+  
+  var add_service_name = input_texts[1].value;
+  var add_start_date = input_texts[2];
+  var add_for_long_month = input_texts[3].value;
+  var add_end_date = input_texts[4].value;
+
+  var update_service_name = input_texts[5].value;
+  var update_start_date = input_texts[6];
+  var update_for_long_month = input_texts[7].value;
+  var update_end_date = input_texts[8].value;
+
+  var delete_service_name = input_texts[9].value;
+
+  //functions
+  $(function () {
+    $(add_start_date).datepicker();
+    $(update_start_date).datepicker();
+  });
+
+  function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+  };
+  
+  function reset_inputs(){
+   
+    for(i = 0; i < input_texts.length; i++){
+      input_texts[i].value = '';
+    }
+
+  };
+
   //login modal activity
   btn_Login.addEventListener("click", () => {
     modal_login.classList.toggle("show");
@@ -197,12 +235,14 @@
 
       if (!modal_login.classList.contains("show")) {
         body.style.overflow = "auto";
+        reset_inputs();
       }
     }
   });
 
   inside_login_btn.addEventListener("click", () => {
     modal_login.classList.remove("show");
+    reset_inputs();
   });
 
   //Add modal activity
@@ -211,17 +251,46 @@
 
     if (modal_add.classList.contains("show")) {
       modal_add.style.overflow = "hidden";
+      
     }
   });
 
   modal_add.addEventListener("click", (event) => {
     if (event.target === modal_add) {
       modal_add.classList.toggle("show");
-
+      
       if (!modal_add.classList.contains("show")) {
         body.style.overflow = "auto";
+        reset_inputs();
       }
     }
+  });
+
+  inside_addcal_btn.addEventListener("click", () => {
+
+    var start_date_temp = add_start_date.value;
+    add_for_long_month = input_texts[3].value;
+    var addDate = 30 * add_for_long_month;
+
+    var end_date_temp = addDays(start_date_temp, addDate).toISOString();
+
+    console.log(end_date_temp);
+
+    var month = end_date_temp.slice(5,7);
+    var date = end_date_temp.slice(8,10);
+    var year = end_date_temp.slice(0,4);
+
+    end_date_temp = month + '/' + date + '/' + year; 
+
+    input_texts[4].value = end_date_temp;
+
+  });
+  inside_add_btn.addEventListener("click", () => {
+    //add object
+
+
+    //reset inputs
+    reset_inputs();
   });
 
   inside_add_btn.addEventListener("click", () => {
@@ -240,15 +309,40 @@
   modal_update.addEventListener("click", (event) => {
     if (event.target === modal_update) {
       modal_update.classList.toggle("show");
-
+     
       if (!modal_update.classList.contains("show")) {
         body.style.overflow = "auto";
+        reset_inputs();
       }
     }
   });
 
+  inside_updatecal_btn.addEventListener("click", () => {
+
+    var start_date_temp = update_start_date.value;
+    update_for_long_month = input_texts[7].value;
+    var addDate = 30 * update_for_long_month;
+
+    var end_date_temp = addDays(start_date_temp, addDate).toISOString();
+
+    console.log(end_date_temp);
+
+    var month = end_date_temp.slice(5,7);
+    var date = end_date_temp.slice(8,10);
+    var year = end_date_temp.slice(0,4);
+
+    end_date_temp = month + '/' + date + '/' + year; 
+
+    input_texts[8].value = end_date_temp;
+    
+  });
+
+
   inside_update_btn.addEventListener("click", () => {
     modal_update.classList.remove("show");
+
+    
+    reset_inputs();
   });
 
   //delete modal activity
@@ -266,13 +360,18 @@
 
       if (!modal_delete.classList.contains("show")) {
         body.style.overflow = "auto";
+        reset_inputs();
       }
     }
   });
 
   inside_del_btn.addEventListener("click", () => {
     modal_delete.classList.remove("show");
+    reset_inputs();
   });
+
+
+
 
 </script>
 
