@@ -6,17 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" type="text/css" />
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+  <script type="text/javascript" src="data.json"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  
+
   <title>구독서비스 관리 도구</title>
 </head>
 
-<body> 
+<body>
 
   <header>
     <!--modal area-->
@@ -26,30 +28,30 @@
       <div class="modal_login">
         <form action="">
           <span class="name">Key</span>
-          <input type="text" class ="input_text" id="key_id" />
+          <input type="text" class="input_text" id="key_id" />
           <input type="button" value="Login" id="inside_login_btn" />
         </form>
       </div>
     </div>
-    
+
     <!-- add modal-->
     <div class="modal_add_cover">
       <div class="modal_add">
         <form action="">
 
           <div class="content_line">
-            <span class ="name">서비스 이름</span>
+            <span class="name">서비스 이름</span>
             <input id="service_name" class="input_text" type="text" />
-            
+
           </div>
           <div class="content_line">
-            <span class ="name">서비스 시작 날짜</span>
+            <span class="name">서비스 시작 날짜</span>
             <input id="add_start_date" class="input_text" type="text" />
             <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
           </div>
           <div class="content_line">
-            <span class ="name">서비스 종료 날짜</span>
+            <span class="name">서비스 종료 날짜</span>
             <input disabled id="end_date" class="input_text" type="text" />
           </div>
 
@@ -57,28 +59,28 @@
             <input name="" id="inside_add_btn" type="button" value="Add" />
             <input id="inside_addcal_btn" type="button" value="Cal" />
           </div>
-          
+
         </form>
       </div>
     </div>
-    
+
     <!-- update modal-->
     <div class="modal_update_cover">
       <div class="modal_update">
         <form action="">
           <div class="content_line">
-            <span class ="name">서비스 이름</span>
+            <span class="name">서비스 이름</span>
             <input id="service_name" class="input_text" type="text" />
-            <input type="button" value="FIND" id ="select_info">
+            <input type="button" value="FIND" id="select_info">
           </div>
           <div class="content_line">
-            <span class ="name">서비스 시작 날짜</span>
+            <span class="name">서비스 시작 날짜</span>
             <input id="update_start_date" class="input_text" type="text" />
             <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
           </div>
           <div class="content_line">
-            <span class ="name">서비스 종료 날짜</span>
+            <span class="name">서비스 종료 날짜</span>
             <input name="" id="end_date" class="input_text" type="text" />
           </div>
 
@@ -96,9 +98,9 @@
       <div class="modal_delete">
         <form action="">
           <div class="content_line">
-          <span class="name">서비스 이름</span>
-          <input type="text" class="input_text" id="service_name">
-          <input type="button" value="FIND" id ="select_info">
+            <span class="name">서비스 이름</span>
+            <input type="text" class="input_text" id="service_name">
+            <input type="button" value="FIND" id="select_info">
           </div>
           <span class="success">테스트용 문구입니다.</span>
           <input id="inside_del_btn" type="button" value="Delete" />
@@ -146,10 +148,10 @@
   }];
 
   var all_html = "";
-  
+
   for (var i = 0; i < subscribes.length; i++) {
     var sub_temp = subscribes[i];
-    all_html = all_html + 
+    all_html = all_html +
       '<div class="element">' +
       '<span class = "name">' + sub_temp.name + '</span>' +
       '<progress value="70" max="100"></progress>' +
@@ -159,13 +161,13 @@
 
   document.querySelector('.elements_cover').innerHTML = all_html;
 
-  
+
 
   // activity_modal
-  
+
 
   const body = document.querySelector("body");
-  const modal_login = document.querySelector(".modal_login_cover");  
+  const modal_login = document.querySelector(".modal_login_cover");
   const modal_add = document.querySelector(".modal_add_cover");
   const modal_update = document.querySelector(".modal_update_cover");
   const modal_delete = document.querySelector(".modal_delete_cover");
@@ -187,7 +189,7 @@
   var input_texts = document.getElementsByClassName("input_text");
 
   var key_id = input_texts[0].value;
-  
+
   var add_service_name = input_texts[1].value;
   var add_start_date = input_texts[2];
   var add_for_long_month = input_texts[3].value;
@@ -200,6 +202,17 @@
 
   var delete_service_name = input_texts[9].value;
 
+  let data = JSON.parse(JSON.stringify(subscribe));
+  var temp =
+  {
+    "id": "elogio",
+    "service_name": "coupang",
+    "start_date": "05/22/2022",
+    "end_date": "07/22/2022"
+  };
+  data.push(temp);
+
+  console.log(data);
   //functions
   $(function () {
     $(add_start_date).datepicker();
@@ -207,14 +220,14 @@
   });
 
   function addDays(date, days) {
-  var result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   };
-  
-  function reset_inputs(){
-   
-    for(i = 0; i < input_texts.length; i++){
+
+  function reset_inputs() {
+
+    for (i = 0; i < input_texts.length; i++) {
       input_texts[i].value = '';
     }
 
@@ -251,14 +264,14 @@
 
     if (modal_add.classList.contains("show")) {
       modal_add.style.overflow = "hidden";
-      
+
     }
   });
 
   modal_add.addEventListener("click", (event) => {
     if (event.target === modal_add) {
       modal_add.classList.toggle("show");
-      
+
       if (!modal_add.classList.contains("show")) {
         body.style.overflow = "auto";
         reset_inputs();
@@ -276,11 +289,11 @@
 
     console.log(end_date_temp);
 
-    var month = end_date_temp.slice(5,7);
-    var date = end_date_temp.slice(8,10);
-    var year = end_date_temp.slice(0,4);
+    var month = end_date_temp.slice(5, 7);
+    var date = end_date_temp.slice(8, 10);
+    var year = end_date_temp.slice(0, 4);
 
-    end_date_temp = month + '/' + date + '/' + year; 
+    end_date_temp = month + '/' + date + '/' + year;
 
     input_texts[4].value = end_date_temp;
 
@@ -309,7 +322,7 @@
   modal_update.addEventListener("click", (event) => {
     if (event.target === modal_update) {
       modal_update.classList.toggle("show");
-     
+
       if (!modal_update.classList.contains("show")) {
         body.style.overflow = "auto";
         reset_inputs();
@@ -327,21 +340,21 @@
 
     console.log(end_date_temp);
 
-    var month = end_date_temp.slice(5,7);
-    var date = end_date_temp.slice(8,10);
-    var year = end_date_temp.slice(0,4);
+    var month = end_date_temp.slice(5, 7);
+    var date = end_date_temp.slice(8, 10);
+    var year = end_date_temp.slice(0, 4);
 
-    end_date_temp = month + '/' + date + '/' + year; 
+    end_date_temp = month + '/' + date + '/' + year;
 
     input_texts[8].value = end_date_temp;
-    
+
   });
 
 
   inside_update_btn.addEventListener("click", () => {
     modal_update.classList.remove("show");
 
-    
+
     reset_inputs();
   });
 
@@ -371,7 +384,17 @@
   });
 
 
+  const url = 'https://jsonplaceholder.typicode.com/todos/1';
 
+  axios.get(url).then(function (result) {
+    //callback 구조로 나중에 result에 통신 결과가 들어옵니다.
+    const status = result.status //status code가 들어갑니다.
+    const data = result.data //응답 데이터가 들어갑니다.
+  }).catch(function (err) {
+    //err에는 에러가 났을 때 관련 정보가 들어갑니다.
+    //만약 별다른 에러가 발생하지 않으면 이쪽 코드는 실행되지 않습니다.
+    console.log(err)
+  });
 
 </script>
 
