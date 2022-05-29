@@ -26,10 +26,10 @@
     <!-- login modal-->
     <div class="modal_login_cover">
       <div class="modal_login">
-        <form action="">
+        <form action="http://localhost:8080/user-data", method="get">
           <span class="name">Key</span>
           <input type="text" class="input_text" id="key_id" />
-          <input type="button" value="Login" id="inside_login_btn" />
+          <input type="submit" value="Login" id="inside_login_btn" />
         </form>
       </div>
     </div>
@@ -384,12 +384,13 @@
   });
 
 
-  const url = 'https://jsonplaceholder.typicode.com/todos/1';
+  const url = 'https://6c65f03b-ce56-4088-8755-836ffa960df2.mock.pstmn.io/user-data';
 
   axios.get(url).then(function (result) {
     //callback 구조로 나중에 result에 통신 결과가 들어옵니다.
     const status = result.status //status code가 들어갑니다.
     const data = result.data //응답 데이터가 들어갑니다.
+    console.log(result.data);
   }).catch(function (err) {
     //err에는 에러가 났을 때 관련 정보가 들어갑니다.
     //만약 별다른 에러가 발생하지 않으면 이쪽 코드는 실행되지 않습니다.
