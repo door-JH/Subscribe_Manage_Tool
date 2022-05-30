@@ -6,15 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
-    type="text/css" />
-  <script type="text/javascript" src="data.json"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+  
+  
   <title>구독서비스 관리 도구</title>
 </head>
 
@@ -26,7 +23,7 @@
     <!-- login modal-->
     <div class="modal_login_cover">
       <div class="modal_login">
-        <form action="http://localhost:8080/user-data", method="get">
+        <form action="" , method="">
           <span class="name">Key</span>
           <input type="text" class="input_text" id="key_id" />
           <input type="submit" value="Login" id="inside_login_btn" />
@@ -71,21 +68,21 @@
           <div class="content_line">
             <span class="name">서비스 이름</span>
             <input id="service_name" class="input_text" type="text" />
-            <input type="button" value="FIND" id="select_info">
+            <input type="button" value="FIND" id="update_select_find">
           </div>
           <div class="content_line">
             <span class="name">서비스 시작 날짜</span>
-            <input id="update_start_date" class="input_text" type="text" />
+            <input disabled id="update_start_date" class="input_text" type="text" />
             <input id="for_long_month" class="input_text" type="text" placeholder="month" />
 
           </div>
           <div class="content_line">
             <span class="name">서비스 종료 날짜</span>
-            <input name="" id="end_date" class="input_text" type="text" />
+            <input disabled name="" id="end_date" class="input_text" type="text" />
           </div>
 
           <div class="optional_menu">
-            <input name="" id="inside_update_btn" type="button" value="Update" />
+            <input disabled name="" id="inside_update_btn" type="button" value="Update" />
             <input id="inside_updatecal_btn" type="button" value="Cal" />
           </div>
           <span class="success">테스트용 문구입니다.</span>
@@ -100,10 +97,23 @@
           <div class="content_line">
             <span class="name">서비스 이름</span>
             <input type="text" class="input_text" id="service_name">
-            <input type="button" value="FIND" id="select_info">
+            <input type="button" value="FIND" id="delete_select_find">
           </div>
           <span class="success">테스트용 문구입니다.</span>
-          <input id="inside_del_btn" type="button" value="Delete" />
+          <input disabled id="inside_del_btn" type="button" value="Delete" />
+        </form>
+      </div>
+    </div>
+
+    <!-- save modal-->
+    <div class="modal_save_cover">
+      <div class="modal_save">
+        <form action="">
+          <div class="content_line">
+            <span class="name">저장할 파일 이름</span>
+            <input type="text" class="input_text" id="service_name">
+          </div>
+          <a href="#" id="download_file" download="sample.json"><input id="inside_save_btn" type="button" value="Save" /></a>
         </form>
       </div>
     </div>
@@ -111,10 +121,11 @@
 
     <!--page-->
     <button id="login_button">로그인</button>
-    <div class="menu_buttons">
+    <div id="menu_buttons">
       <button id="add_button"> 추가 </button>
       <button id="update_button"> 수정 </button>
       <button id="delete_button"> 삭제 </button>
+      <button id="save_button"> 저장 </button>
     </div>
 
 
@@ -124,42 +135,14 @@
     <!-- elements section-->
     <div class="elements_cover">
     </div>
+    
+
   </section>
 </body>
 
 <script>
 
-  //DOM
-  var subscribes = [{
-    id: "elogio",
-    name: "netflix",
-    start_date: "05/22/2022",
-    end_date: "06/22/2022"
-  }, {
-    id: "elogio",
-    name: "coupang",
-    start_date: "07/22/2022",
-    end_date: "08/22/2022"
-  }, {
-    id: "elogio",
-    name: "smile_club",
-    start_date: "06/22/2022",
-    end_date: "07/22/2022"
-  }];
 
-  var all_html = "";
-
-  for (var i = 0; i < subscribes.length; i++) {
-    var sub_temp = subscribes[i];
-    all_html = all_html +
-      '<div class="element">' +
-      '<span class = "name">' + sub_temp.name + '</span>' +
-      '<progress value="70" max="100"></progress>' +
-      '<span class="per">70%</span>' +
-      '</div>'
-  }
-
-  document.querySelector('.elements_cover').innerHTML = all_html;
 
 
 
@@ -171,48 +154,56 @@
   const modal_add = document.querySelector(".modal_add_cover");
   const modal_update = document.querySelector(".modal_update_cover");
   const modal_delete = document.querySelector(".modal_delete_cover");
+  const modal_save = document.querySelector(".modal_save_cover");
+
+ 
 
   const btn_Login = document.querySelector("#login_button");
   const btn_Add = document.querySelector("#add_button");
   const btn_Update = document.querySelector("#update_button");
   const btn_Del = document.querySelector("#delete_button");
+  const btn_Save = document.querySelector("#save_button");
+
 
   const inside_login_btn = document.querySelector("#inside_login_btn");
   const inside_add_btn = document.querySelector("#inside_add_btn");
   const inside_update_btn = document.querySelector("#inside_update_btn");
   const inside_del_btn = document.querySelector("#inside_del_btn");
+  const inside_save_btn = document.querySelector("#inside_save_btn");
+
 
   const inside_addcal_btn = document.querySelector("#inside_addcal_btn");
   const inside_updatecal_btn = document.querySelector("#inside_updatecal_btn");
+
+  const inside_updatefind_btn = document.querySelector("#update_select_find");
+  const inside_deletefind_btn = document.querySelector("#delete_select_find");
 
   //define input_texts
   var input_texts = document.getElementsByClassName("input_text");
 
   var key_id = input_texts[0].value;
 
-  var add_service_name = input_texts[1].value;
+  var add_service_name = input_texts[1];
   var add_start_date = input_texts[2];
-  var add_for_long_month = input_texts[3].value;
-  var add_end_date = input_texts[4].value;
+  var add_for_long_month = input_texts[3];
+  var add_end_date = input_texts[4];
 
-  var update_service_name = input_texts[5].value;
+  var update_service_name = input_texts[5];
   var update_start_date = input_texts[6];
-  var update_for_long_month = input_texts[7].value;
-  var update_end_date = input_texts[8].value;
+  var update_for_long_month = input_texts[7];
+  var update_end_date = input_texts[8];
 
-  var delete_service_name = input_texts[9].value;
+  var delete_service_name = input_texts[9];
 
-  let data = JSON.parse(JSON.stringify(subscribe));
-  var temp =
-  {
-    "id": "elogio",
-    "service_name": "coupang",
-    "start_date": "05/22/2022",
-    "end_date": "07/22/2022"
-  };
-  data.push(temp);
+  var save_file_name = input_texts[10];
 
-  console.log(data);
+  //other variables
+  var pos = 0;
+  var temp_object = [];
+  var filename = "";
+  var dataUri;
+
+
   //functions
   $(function () {
     $(add_start_date).datepicker();
@@ -225,38 +216,71 @@
     return result;
   };
 
-  function reset_inputs() {
 
+  var all_html = "";
+
+  function load_html(){
+    all_html = "";
+    document.querySelector('.elements_cover').innerHTML = "";
+    for (var i = 0; i < temp_object.length; i++) {
+    var sub_temp = temp_object[i];
+    all_html = all_html +
+      '<div class="element">' +
+      '<span class = "name">' + sub_temp.service_name + '</span>' +
+      '<progress value="70" max="100"></progress>' +
+      '<span class="per">70%</span>' +
+      '</div>'
+      document.querySelector('.elements_cover').innerHTML = all_html;
+   }
+  }
+
+  
+
+
+  function reset_inputs() {
     for (i = 0; i < input_texts.length; i++) {
       input_texts[i].value = '';
     }
-
   };
 
-  //login modal activity
-  btn_Login.addEventListener("click", () => {
-    modal_login.classList.toggle("show");
+  //openfile
+  function openTextFile() {
+    var input = document.createElement("input");
 
-    if (modal_login.classList.contains("show")) {
-      modal_login.style.overflow = "hidden";
-    }
-  });
+    input.type = "file";
+    input.accept = ".json";
+    input.click();
+    input.onchange = function (event) {
+      processFile(event.target.files[0]);
+    };
 
-  modal_login.addEventListener("click", (event) => {
-    if (event.target === modal_login) {
-      modal_login.classList.toggle("show");
+  function processFile(file) {
+    var reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
 
-      if (!modal_login.classList.contains("show")) {
-        body.style.overflow = "auto";
-        reset_inputs();
+    reader.onload = function () {
+      result_object = JSON.parse(reader.result);
+      temp_object = result_object;
+      console.log(result_object);
+
+      if(result_object !== null){
+        alert('데이터를 성공적으로 불러왔습니다.');
+        document.getElementById("menu_buttons").style.display = "inline-block";
+        document.getElementById("login_button").style.display = "none";
+
+        load_html();
       }
-    }
+    };
+  }
+}
+
+  //login modal activity
+
+  btn_Login.addEventListener("click", () => {
+      openTextFile();
   });
 
-  inside_login_btn.addEventListener("click", () => {
-    modal_login.classList.remove("show");
-    reset_inputs();
-  });
+  
 
   //Add modal activity
   btn_Add.addEventListener("click", () => {
@@ -282,8 +306,7 @@
   inside_addcal_btn.addEventListener("click", () => {
 
     var start_date_temp = add_start_date.value;
-    add_for_long_month = input_texts[3].value;
-    var addDate = 30 * add_for_long_month;
+    var addDate = 30 * add_for_long_month.value;
 
     var end_date_temp = addDays(start_date_temp, addDate).toISOString();
 
@@ -296,14 +319,30 @@
     end_date_temp = month + '/' + date + '/' + year;
 
     input_texts[4].value = end_date_temp;
-
+    
   });
+
   inside_add_btn.addEventListener("click", () => {
     //add object
-
-
+    
+    for(var i = 0; i < temp_object.length; i++){
+      if(temp_object[i].service_name === add_service_name.value){
+        alert("같은 이름의 서비스가 이미 존재합니다.")
+        throw "INPUT_SAME_VALUE";
+        
+      }
+    }
+    temp_object.push({
+        "service_name" : add_service_name.value,
+        "start_date" : add_start_date.value,
+        "end_date" : add_end_date.value
+    });
+    
     //reset inputs
     reset_inputs();
+    console.log(temp_object);
+    alert('추가되었습니다.');
+    load_html();
   });
 
   inside_add_btn.addEventListener("click", () => {
@@ -332,13 +371,9 @@
 
   inside_updatecal_btn.addEventListener("click", () => {
 
-    var start_date_temp = update_start_date.value;
-    update_for_long_month = input_texts[7].value;
-    var addDate = 30 * update_for_long_month;
-
+    var start_date_temp = update_start_date.value;    
+    var addDate = 30 * update_for_long_month.value;
     var end_date_temp = addDays(start_date_temp, addDate).toISOString();
-
-    console.log(end_date_temp);
 
     var month = end_date_temp.slice(5, 7);
     var date = end_date_temp.slice(8, 10);
@@ -350,12 +385,43 @@
 
   });
 
+  inside_updatefind_btn.addEventListener("click", () => {
+    object_length = temp_object.length;
+    
+    for(var i = 0; i < object_length; i++){
+      console.log(i);
+      if(temp_object[i].service_name === update_service_name.value){
+        alert("수정할 서비스를 찾았습니다.");
+
+        pos = i;
+
+        update_start_date.value = temp_object[i].start_date;
+        update_end_date.value = temp_object[i].end_date;
+        
+        update_start_date.disabled = false;
+        update_end_date.disabled = false;
+        inside_update_btn.disabled = false;
+
+      }
+    }
+
+    
+  });
+
 
   inside_update_btn.addEventListener("click", () => {
     modal_update.classList.remove("show");
 
+    temp_object[pos].start_date =  update_start_date.value;
+    temp_object[pos].end_date = update_end_date.value;
+
+    update_start_date.disabled = false;
+    update_end_date.disabled = false;
 
     reset_inputs();
+    console.log(temp_object);
+    alert('수정되었습니다.');
+    load_html();
   });
 
   //delete modal activity
@@ -378,24 +444,90 @@
     }
   });
 
+  var object_length = 0;
+  inside_deletefind_btn.addEventListener("click", () => {
+    object_length = temp_object.length;
+
+    if(delete_service_name.value === "") {
+        alert('서비스 이름을 제대로 입력해주세요.');
+        throw "NOT_FOUND_ELEMENT";        
+      }
+
+    for(var i = 0; i < object_length; i++){
+      console.log(i);
+      if(temp_object[i].service_name === delete_service_name.value){
+        alert("삭제할 서비스를 찾았습니다.");
+        pos = i;    
+        inside_del_btn.disabled = false;
+       
+      }
+      
+    }
+
+  });
+
   inside_del_btn.addEventListener("click", () => {
     modal_delete.classList.remove("show");
+    temp_object.pop(pos);
+    reset_inputs();
+    alert('서비스를 삭제했습니다.');
+    inside_del_btn.disabled = true;
+    load_html();
+    
+  });
+
+
+  //save modal activity
+  btn_Save.addEventListener("click", () => {
+    modal_save.classList.toggle("show");
+
+    if (modal_save.classList.contains("show")) {
+      modal_save.style.overflow = "hidden";
+    }
+  });
+
+  modal_save.addEventListener("click", (event) => {
+    if (event.target === modal_save) {
+      modal_save.classList.toggle("show");
+
+      if (!modal_save.classList.contains("show")) {
+        body.style.overflow = "auto";
+        reset_inputs();
+      }
+    }
+  });
+
+  
+  save_file_name.addEventListener("keyup", () => {
+
+    filename = save_file_name.value;
+
+    $(document).ready(function () {
+    var obj = new Object();   
+    var obj_s = JSON.stringify(temp_object, null, "\t");
+    dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(obj_s);    
+  });
+    
+    document.getElementById("download_file").setAttribute('download', filename + '.json');
+    console.log("동작");
+  })
+
+
+  inside_save_btn.addEventListener("click", () => {  
+
+    filename = save_file_name.value;
+
+  if(filename === "") {
+    alert('파일이름을 입력해주세요.');
+    throw "NO_INPUT_TEXT";
+  } else {
+    $("#download_file").attr("href", dataUri);
+  }
+
     reset_inputs();
   });
 
 
-  const url = 'https://6c65f03b-ce56-4088-8755-836ffa960df2.mock.pstmn.io/user-data';
-
-  axios.get(url).then(function (result) {
-    //callback 구조로 나중에 result에 통신 결과가 들어옵니다.
-    const status = result.status //status code가 들어갑니다.
-    const data = result.data //응답 데이터가 들어갑니다.
-    console.log(result.data);
-  }).catch(function (err) {
-    //err에는 에러가 났을 때 관련 정보가 들어갑니다.
-    //만약 별다른 에러가 발생하지 않으면 이쪽 코드는 실행되지 않습니다.
-    console.log(err)
-  });
 
 </script>
 

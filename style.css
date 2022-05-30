@@ -147,7 +147,8 @@ section {
 #login_button,
 #update_button,
 #delete_button,
-#add_button {
+#add_button,
+#save_button {
   display: inline-block;
   height: 40px;
   width: 80px;
@@ -160,7 +161,8 @@ section {
 .modal_login_cover,
 .modal_add_cover,
 .modal_update_cover,
-.modal_delete_cover {
+.modal_delete_cover,
+.modal_save_cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -173,14 +175,16 @@ section {
 .modal_login_cover.show,
 .modal_add_cover.show,
 .modal_update_cover.show,
-.modal_delete_cover.show {
+.modal_delete_cover.show,
+.modal_save_cover.show {
   display: block;
 }
 
 .modal_login,
 .modal_add,
 .modal_update,
-.modal_delete {
+.modal_delete,
+.modal_save {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -239,12 +243,15 @@ section {
   margin-left: 5px;
 }
 
+
 .modal_delete .success {
   position: absolute;
   bottom: 40px;
   left: 40px;
 }
-#inside_del_btn {
+
+#inside_del_btn,
+#inside_save_btn {
   position: absolute;
   bottom: 40px;
   right: 40px;
@@ -260,8 +267,10 @@ section {
   margin: 5px;
 }
 
-.menu_buttons {
-  display: inline-block;
+#menu_buttons {
+  display: none;
+  
+
 }
 
 .success {
