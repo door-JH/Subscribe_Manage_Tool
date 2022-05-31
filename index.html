@@ -10,8 +10,9 @@
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
     type="text/css" />
-  
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
+
+
   <title>구독서비스 관리 도구</title>
 </head>
 
@@ -113,7 +114,8 @@
             <span class="name">저장할 파일 이름</span>
             <input type="text" class="input_text" id="service_name">
           </div>
-          <a href="#" id="download_file" download="sample.json"><input id="inside_save_btn" type="button" value="Save" /></a>
+          <a href="#" id="download_file" download="sample.json"><input id="inside_save_btn" type="button"
+              value="Save" /></a>
         </form>
       </div>
     </div>
@@ -128,6 +130,9 @@
       <button id="save_button"> 저장 </button>
     </div>
 
+    <a href="#" download="sample.json" id="sample_download_a">
+      <button id="sample_download">샘플다운</button>
+    </a>
 
   </header>
 
@@ -135,7 +140,6 @@
     <!-- elements section-->
     <div class="elements_cover">
     </div>
-    
 
   </section>
 </body>
@@ -147,8 +151,6 @@
 
 
   // activity_modal
-
-
   const body = document.querySelector("body");
   const modal_login = document.querySelector(".modal_login_cover");
   const modal_add = document.querySelector(".modal_add_cover");
@@ -156,7 +158,7 @@
   const modal_delete = document.querySelector(".modal_delete_cover");
   const modal_save = document.querySelector(".modal_save_cover");
 
- 
+
 
   const btn_Login = document.querySelector("#login_button");
   const btn_Add = document.querySelector("#add_button");
@@ -177,6 +179,8 @@
 
   const inside_updatefind_btn = document.querySelector("#update_select_find");
   const inside_deletefind_btn = document.querySelector("#delete_select_find");
+
+  const sample_download_btn = document.querySelector("#sample_download");
 
   //define input_texts
   var input_texts = document.getElementsByClassName("input_text");
@@ -202,7 +206,7 @@
   var temp_object = [];
   var filename = "";
   var dataUri;
-
+  var sample_object = [];
 
   //functions
   $(function () {
@@ -219,22 +223,22 @@
 
   var all_html = "";
 
-  function load_html(){
+  function load_html() {
     all_html = "";
     document.querySelector('.elements_cover').innerHTML = "";
     for (var i = 0; i < temp_object.length; i++) {
-    var sub_temp = temp_object[i];
-    all_html = all_html +
-      '<div class="element">' +
-      '<span class = "name">' + sub_temp.service_name + '</span>' +
-      '<progress value="70" max="100"></progress>' +
-      '<span class="per">70%</span>' +
-      '</div>'
+      var sub_temp = temp_object[i];
+      all_html = all_html +
+        '<div class="element">' +
+        '<span class = "name">' + sub_temp.service_name + '</span>' +
+        '<progress value="70" max="100"></progress>' +
+        '<span class="per">70%</span>' +
+        '</div>'
       document.querySelector('.elements_cover').innerHTML = all_html;
-   }
+    }
   }
 
-  
+
 
 
   function reset_inputs() {
@@ -254,33 +258,46 @@
       processFile(event.target.files[0]);
     };
 
-  function processFile(file) {
-    var reader = new FileReader();
-    reader.readAsText(file, "UTF-8");
+    function processFile(file) {
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
 
-    reader.onload = function () {
-      result_object = JSON.parse(reader.result);
-      temp_object = result_object;
-      console.log(result_object);
+      reader.onload = function () {
+        result_object = JSON.parse(reader.result);
+        temp_object = result_object;
+        console.log(result_object);
 
-      if(result_object !== null){
-        alert('데이터를 성공적으로 불러왔습니다.');
-        document.getElementById("menu_buttons").style.display = "inline-block";
-        document.getElementById("login_button").style.display = "none";
+        if (result_object !== null) {
+          alert('데이터를 성공적으로 불러왔습니다.');
+          document.getElementById("menu_buttons").style.display = "inline-block";
+          document.getElementById("login_button").style.display = "none";
 
-        load_html();
-      }
-    };
+          load_html();
+        }
+      };
+    }
   }
-}
+  //sample ready
+  $(document).ready(function () {
+    var sample = JSON.stringify(sample_object, null, "\t");
+    dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(sample);
+  });
+  //sample_download
+  sample_download_btn.addEventListener("click", () => {
+    $("#sample_download_a").attr("href", dataUri);
+    sample_download_btn.style.display = "none";
+  });
+
+
+
 
   //login modal activity
 
   btn_Login.addEventListener("click", () => {
-      openTextFile();
+    openTextFile();
   });
 
-  
+
 
   //Add modal activity
   btn_Add.addEventListener("click", () => {
@@ -319,25 +336,25 @@
     end_date_temp = month + '/' + date + '/' + year;
 
     input_texts[4].value = end_date_temp;
-    
+
   });
 
   inside_add_btn.addEventListener("click", () => {
     //add object
-    
-    for(var i = 0; i < temp_object.length; i++){
-      if(temp_object[i].service_name === add_service_name.value){
+
+    for (var i = 0; i < temp_object.length; i++) {
+      if (temp_object[i].service_name === add_service_name.value) {
         alert("같은 이름의 서비스가 이미 존재합니다.")
         throw "INPUT_SAME_VALUE";
-        
+
       }
     }
     temp_object.push({
-        "service_name" : add_service_name.value,
-        "start_date" : add_start_date.value,
-        "end_date" : add_end_date.value
+      "service_name": add_service_name.value,
+      "start_date": add_start_date.value,
+      "end_date": add_end_date.value
     });
-    
+
     //reset inputs
     reset_inputs();
     console.log(temp_object);
@@ -371,7 +388,7 @@
 
   inside_updatecal_btn.addEventListener("click", () => {
 
-    var start_date_temp = update_start_date.value;    
+    var start_date_temp = update_start_date.value;
     var addDate = 30 * update_for_long_month.value;
     var end_date_temp = addDays(start_date_temp, addDate).toISOString();
 
@@ -387,17 +404,17 @@
 
   inside_updatefind_btn.addEventListener("click", () => {
     object_length = temp_object.length;
-    
-    for(var i = 0; i < object_length; i++){
+
+    for (var i = 0; i < object_length; i++) {
       console.log(i);
-      if(temp_object[i].service_name === update_service_name.value){
+      if (temp_object[i].service_name === update_service_name.value) {
         alert("수정할 서비스를 찾았습니다.");
 
         pos = i;
 
         update_start_date.value = temp_object[i].start_date;
         update_end_date.value = temp_object[i].end_date;
-        
+
         update_start_date.disabled = false;
         update_end_date.disabled = false;
         inside_update_btn.disabled = false;
@@ -405,14 +422,14 @@
       }
     }
 
-    
+
   });
 
 
   inside_update_btn.addEventListener("click", () => {
     modal_update.classList.remove("show");
 
-    temp_object[pos].start_date =  update_start_date.value;
+    temp_object[pos].start_date = update_start_date.value;
     temp_object[pos].end_date = update_end_date.value;
 
     update_start_date.disabled = false;
@@ -448,20 +465,20 @@
   inside_deletefind_btn.addEventListener("click", () => {
     object_length = temp_object.length;
 
-    if(delete_service_name.value === "") {
-        alert('서비스 이름을 제대로 입력해주세요.');
-        throw "NOT_FOUND_ELEMENT";        
+    if (delete_service_name.value === "") {
+      alert('서비스 이름을 제대로 입력해주세요.');
+      throw "NOT_FOUND_ELEMENT";
+    }
+
+    for (var i = 0; i < object_length; i++) {
+      console.log(i);
+      if (temp_object[i].service_name === delete_service_name.value) {
+        alert("삭제할 서비스를 찾았습니다.");
+        pos = i;
+        inside_del_btn.disabled = false;
+
       }
 
-    for(var i = 0; i < object_length; i++){
-      console.log(i);
-      if(temp_object[i].service_name === delete_service_name.value){
-        alert("삭제할 서비스를 찾았습니다.");
-        pos = i;    
-        inside_del_btn.disabled = false;
-       
-      }
-      
     }
 
   });
@@ -473,7 +490,7 @@
     alert('서비스를 삭제했습니다.');
     inside_del_btn.disabled = true;
     load_html();
-    
+
   });
 
 
@@ -497,32 +514,32 @@
     }
   });
 
-  
+
   save_file_name.addEventListener("keyup", () => {
 
     filename = save_file_name.value;
 
     $(document).ready(function () {
-    var obj = new Object();   
-    var obj_s = JSON.stringify(temp_object, null, "\t");
-    dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(obj_s);    
-  });
-    
+      var obj = new Object();
+      var obj_s = JSON.stringify(temp_object, null, "\t");
+      dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(obj_s);
+    });
+
     document.getElementById("download_file").setAttribute('download', filename + '.json');
     console.log("동작");
   })
 
 
-  inside_save_btn.addEventListener("click", () => {  
+  inside_save_btn.addEventListener("click", () => {
 
     filename = save_file_name.value;
 
-  if(filename === "") {
-    alert('파일이름을 입력해주세요.');
-    throw "NO_INPUT_TEXT";
-  } else {
-    $("#download_file").attr("href", dataUri);
-  }
+    if (filename === "") {
+      alert('파일이름을 입력해주세요.');
+      throw "NO_INPUT_TEXT";
+    } else {
+      $("#download_file").attr("href", dataUri);
+    }
 
     reset_inputs();
   });

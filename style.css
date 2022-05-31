@@ -129,8 +129,6 @@ table {
 }
 /* css reset */
 
-
-
 header {
   height: 50px;
   background-color: white;
@@ -202,7 +200,7 @@ section {
   font-size: 17px;
 }
 .element .name {
-  width:200px;
+  width: 200px;
 }
 
 .input_text {
@@ -214,7 +212,7 @@ section {
 }
 
 #inside_login_btn {
-  float:right;
+  float: right;
 }
 
 .content_line,
@@ -243,13 +241,12 @@ section {
   margin-left: 5px;
 }
 
-
 .modal_delete .success {
   position: absolute;
   bottom: 40px;
   left: 40px;
 }
-
+#sample_download,
 #inside_del_btn,
 #inside_save_btn {
   position: absolute;
@@ -269,11 +266,9 @@ section {
 
 #menu_buttons {
   display: none;
-  
-
 }
 
 .success {
   font-size: 10px;
-  color:mediumseagreen;
+  color: mediumseagreen;
 }
