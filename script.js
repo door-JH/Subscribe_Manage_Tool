@@ -352,7 +352,7 @@
 
   inside_del_btn.addEventListener("click", () => {
     modal_delete.classList.remove("show");
-    temp_object.pop(pos);
+    temp_object.splice(pos, 1);
     reset_inputs();
     alert('서비스를 삭제했습니다.');
     inside_del_btn.disabled = true;
