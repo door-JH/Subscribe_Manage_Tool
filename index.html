@@ -506,7 +506,7 @@
   modal_save.addEventListener("click", (event) => {
     if (event.target === modal_save) {
       modal_save.classList.toggle("show");
-
+      console.log("");
       if (!modal_save.classList.contains("show")) {
         body.style.overflow = "auto";
         reset_inputs();
