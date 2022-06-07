@@ -1,157 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" type="text/css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet"
-    type="text/css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
-  
-
-
-  <title>구독서비스 관리 도구</title>
-</head>
-
-<body>
-
-  <header>
-    <!--modal area-->
-
-    <!-- login modal-->
-    <div class="modal_login_cover">
-      <div class="modal_login">
-        <form action="" , method="">
-          <span class="name">Key</span>
-          <input type="text" class="input_text" id="key_id" />
-          <input type="submit" value="Login" id="inside_login_btn" />
-        </form>
-      </div>
-    </div>
-
-    <!-- add modal-->
-    <div class="modal_add_cover">
-      <div class="modal_add">
-        <form action="">
-
-          <div class="content_line">
-            <span class="name">서비스 이름</span>
-            <input id="service_name" class="input_text" type="text" />
-
-          </div>
-          <div class="content_line">
-            <span class="name">서비스 시작 날짜</span>
-            <input id="add_start_date" class="input_text" type="text" />
-            <input id="for_long_month" class="input_text" type="text" placeholder="month" />
-
-          </div>
-          <div class="content_line">
-            <span class="name">서비스 종료 날짜</span>
-            <input disabled id="end_date" class="input_text" type="text" />
-          </div>
-
-          <div class="optional_menu">
-            <input name="" id="inside_add_btn" type="button" value="Add" />
-            <input id="inside_addcal_btn" type="button" value="Cal" />
-          </div>
-
-        </form>
-      </div>
-    </div>
-
-    <!-- update modal-->
-    <div class="modal_update_cover">
-      <div class="modal_update">
-        <form action="">
-          <div class="content_line">
-            <span class="name">서비스 이름</span>
-            <input id="service_name" class="input_text" type="text" />
-            <input type="button" value="FIND" id="update_select_find">
-          </div>
-          <div class="content_line">
-            <span class="name">서비스 시작 날짜</span>
-            <input disabled id="update_start_date" class="input_text" type="text" />
-            <input id="for_long_month" class="input_text" type="text" placeholder="month" />
-
-          </div>
-          <div class="content_line">
-            <span class="name">서비스 종료 날짜</span>
-            <input disabled name="" id="end_date" class="input_text" type="text" />
-          </div>
-
-          <div class="optional_menu">
-            <input disabled name="" id="inside_update_btn" type="button" value="Update" />
-            <input id="inside_updatecal_btn" type="button" value="Cal" />
-          </div>
-          <!-- <span class="success">테스트용 문구입니다.</span> -->
-        </form>
-      </div>
-    </div>
-
-    <!-- delete modal-->
-    <div class="modal_delete_cover">
-      <div class="modal_delete">
-        <form action="">
-          <div class="content_line">
-            <span class="name">서비스 이름</span>
-            <input type="text" class="input_text" id="service_name">
-            <input type="button" value="FIND" id="delete_select_find">
-          </div>
-          <!-- <span class="success">테스트용 문구입니다.</span> -->
-          <input disabled id="inside_del_btn" type="button" value="Delete" />
-        </form>
-      </div>
-    </div>
-
-    <!-- save modal-->
-    <div class="modal_save_cover">
-      <div class="modal_save">
-        <form action="">
-          <div class="content_line">
-            <span class="name">저장할 파일 이름</span>
-            <input type="text" class="input_text" id="service_name">
-          </div>
-          <a href="#" id="download_file" download="sample.json"><input id="inside_save_btn" type="button"
-              value="Save" /></a>
-        </form>
-      </div>
-    </div>
-
-
-    <!--page-->
-    <button id="login_button">로그인</button>
-    <div id="menu_buttons">
-      <button id="add_button"> 추가 </button>
-      <button id="update_button"> 수정 </button>
-      <button id="delete_button"> 삭제 </button>
-      <button id="save_button"> 저장 </button>
-    </div>
-
-    <a href="#" download="sample.json" id="sample_download_a">
-      <button id="sample_download">샘플다운</button>
-    </a>
-
-  </header>
-
-  <section>
-    <!-- elements section-->
-    <div class="elements_cover">
-    </div>
-
-  </section>
-</body>
-<<<<<<< HEAD
-
-<script>
-
-
-
-
-
   // activity_modal
   const body = document.querySelector("body");
   const modal_login = document.querySelector(".modal_login_cover");
@@ -210,6 +56,11 @@
   var dataUri;
   var sample_object = [];
 
+  var t_start; 
+  var t_end;
+  var t_now;
+  
+
   //functions
   $(function () {
     $(add_start_date).datepicker();
@@ -221,6 +72,19 @@
     result.setDate(result.getDate() + days);
     return result;
   };
+  //get remain service_time per
+  function get_time_per(start, end){
+
+    t_start = new Date(start).getTime();
+    t_end = new Date(end).getTime();
+    t_now = new Date().getTime();
+
+    var t_full = Math.floor((t_end - t_start) / (24 * 3600 * 1000));
+    var t_chase = Math.floor((t_now - t_start) / (24 * 3600 * 1000));
+
+    var t_per = (t_chase * 100) / t_full;
+    return t_per;
+  }
 
 
   var all_html = "";
@@ -233,8 +97,8 @@
       all_html = all_html +
         '<div class="element">' +
         '<span class = "name">' + sub_temp.service_name + '</span>' +
-        '<progress value="70" max="100"></progress>' +
-        '<span class="per">70%</span>' +
+        '<progress value='+parseInt(get_time_per(sub_temp.start_date, sub_temp.end_date))+' max="100"></progress>' +
+        '<span class="per">'+ parseInt(get_time_per(sub_temp.start_date, sub_temp.end_date))+'%</span>' +
         '</div>'
       document.querySelector('.elements_cover').innerHTML = all_html;
     }
@@ -297,6 +161,7 @@
 
   btn_Login.addEventListener("click", () => {
     openTextFile();
+    sample_download_btn.style.display = "none";
   });
 
 
@@ -487,7 +352,7 @@
 
   inside_del_btn.addEventListener("click", () => {
     modal_delete.classList.remove("show");
-    temp_object.pop(pos);
+    temp_object.splice(pos, 1);
     reset_inputs();
     alert('서비스를 삭제했습니다.');
     inside_del_btn.disabled = true;
@@ -508,7 +373,7 @@
   modal_save.addEventListener("click", (event) => {
     if (event.target === modal_save) {
       modal_save.classList.toggle("show");
-      console.log("");
+
       if (!modal_save.classList.contains("show")) {
         body.style.overflow = "auto";
         reset_inputs();
@@ -545,12 +410,3 @@
 
     reset_inputs();
   });
-
-
-
-</script>
-
-=======
-<script type="text/javascript" src="script.js"></script>
->>>>>>> 135f98f693502648342834db62faf1fc6ab1c9a9
-</html>
